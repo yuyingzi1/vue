@@ -1,6 +1,6 @@
 <template>
   <div style="width: 100%;height: 1000px;padding: 40px 40px; background-color: white;border-radius: 4px">
-    <div style="margin-bottom:40px;font-size:18px;font-weight:530;">管理员管理</div>
+    <div style="margin-bottom:40px;font-size:18px;font-weight:530;">用户管理</div>
     <div style="margin-bottom: 20px; display: flex">
     <div style="flex: 10;text-align: left">
       <el-input placeholder="请输入查询内容" size="small" V-model="input" style="width: 20%; margin-right: 20px"><i slot="suffix" class="el-input__icon el-icon-search"></i></el-input>
@@ -53,7 +53,7 @@ export default {
       console.log(`当前页: ${val}`);
     },
     load() {
-      request.get('/admin/alldata').then(res => {
+      request.get('/user/alldata').then(res => {
 
         if (res.code === '0') {
           this.tableData = res.data;

@@ -26,8 +26,8 @@
               <i class="el-icon-user"></i>
               <span v-if="!isCollapse">用户管理</span>
             </template>
-            <el-menu-item index="/manager/about">关于我们</el-menu-item>
-            <el-menu-item index="/manager/admin">用户管理</el-menu-item>
+            <el-menu-item index="/manager/user">用户管理</el-menu-item>
+            <el-menu-item index="/manager/admin">管理员管理</el-menu-item>
           </el-submenu>
           <el-submenu index="3">
             <template slot="title">
@@ -40,9 +40,9 @@
           <el-submenu index="4">
             <template slot="title">
               <i class="el-icon-setting"></i>
-              <span v-if="!isCollapse">系统设置</span>
+              <span v-if="!isCollapse">资源列表</span>
             </template>
-            <el-menu-item index="3-1">选项1</el-menu-item>
+            <el-menu-item index="3-1">商品列表</el-menu-item>
             <el-menu-item index="3-2">选项2</el-menu-item>
           </el-submenu>
         </el-menu>
