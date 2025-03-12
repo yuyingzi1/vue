@@ -64,28 +64,15 @@ export default {
         this.$notify.error("请选择角色");
         return;
       }
-      if (this.form.role === '1'){
-        // 如果用户角色为1，调用管理员登录的接口
-        request.post('/admin/login', this.form).then(res => {
-          if(res.code === '0') {
-            this.$notify.success("登录成功！");
-            this.$router.push("/manager/home")
-          } else {
-            this.$notify.error(res.msg);
-          }
-        });
-      }
-      if ( this.form.role === '2'){
-        // 如果角色标识为2，调用后用户登录的接口
-        request.post('/user/login', this.form).then(res => {
-          if(res.code === '0') {
-            this.$notify.success("登录成功！");
-            this.$router.push("/manager/home")
-          } else {
-            this.$notify.error(res.msg);
-          }
-        });
-      }
+      // 如果角色标识为1，调用后台管理员登录注册接口
+      request.post('/account/login', this.form).then(res => {
+        if(res.code === '0') {
+          this.$notify.success("登录成功！");
+          this.$router.push("/manager/home")
+        } else {
+          this  .$notify.error(res.msg);
+        }
+      });
     },
     navRegister() {
       this.$router.push("/register")

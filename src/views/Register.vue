@@ -53,32 +53,33 @@ export default {
   // 定义一些页面上控件出发的事件调用的方法
   methods: {
     // 注册
-    register(){
-      if (!this.form.userName){
-        this.$notify.error("用户名不能为空")
-        return
+    register() {
+      // 页面表单数据的输入校验
+      if (!this.form.userName) {
+        this.$notify.error("请输入用户名");
+        return;
       }
-      if (!this.form.password){
-        this.$notify.error("密码不能为空")
-        return
+      if (!this.form.password) {
+        this.$notify.error("请输入密码");
+        return;
       }
-      if (!this.form.role){
-        this.$notify.error("角色不能为空")
-        return
+      if (this.form.password !== this.form.nmm) {
+        this.$notify.error("两次密码输入不一致");
+        return;
       }
-      if (this.form.password !== this.form.nmm){
-        this.$notify.error("两次输入的密码不一致")
-        return
+      if (!this.form.role) {
+        this.$notify.error("请选择角色");
+        return;
       }
-
-      request.post("user/register",this.form).then( res => {
-        if (res.code === '0'){
-          this.$notify.success("注册成功");
-          this.$router.push("/manager/user")
+      // 调用后台注册接口
+      request.post('/account/register', this.form).then(res => {
+        if(res.code === '0') {
+          this.$notify.success("注册成功！");
+          this.$router.push("/manager/home")
         } else {
-          this.$notify.error(res.msg)
+          this.$notify.error(res.msg);
         }
-      })
+      });
     },
 
     navLogin() {
