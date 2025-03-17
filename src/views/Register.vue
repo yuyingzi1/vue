@@ -77,7 +77,7 @@ export default {
           this.$notify.success("注册成功！");
           this.$router.push("/manager/home")
         } else {
-          this.$notify.error(res.msg);
+          this  .$notify.error(res.msg);
         }
       });
     },
@@ -107,18 +107,18 @@ export default {
   opacity: 1;
 }
 
-/deep/ .el-form-item {
+.el-form-item {
   margin-bottom: 5px;
 }
 
-/deep/ .el-input__inner {
+.el-input__inner {
   border-color: #ccc !important;
   border-radius: 2px;
   background-color: #ffffff !important;
   color: #333;
 }
 
-/deep/ .el-input__icon {
+.el-input__icon {
   color: #666;
 }
 

@@ -50,6 +50,7 @@ export default {
   // 定义一些页面上控件出发的事件调用的方法
   methods: {
     // 登录按钮点击事件入口
+    // 登录按钮点击事件入口
     login() {
       // 页面表单数据的输入校验
       if (!this.form.userName) {
@@ -67,6 +68,13 @@ export default {
       // 如果角色标识为1，调用后台管理员登录注册接口
       request.post('/account/login', this.form).then(res => {
         if(res.code === '0') {
+          // 获取后端传过来的token的user对象
+          let user = res.data.user;
+          let token = res.data.token;
+
+          //存入前端缓存
+          localStorage.setItem("token",token);
+          localStorage.setItem("user",JSON.stringify(user))
           this.$notify.success("登录成功！");
           this.$router.push("/manager/home")
         } else {
@@ -98,15 +106,18 @@ export default {
   background-color: #ffffff;
   opacity: 1;
 }
+
 .el-form-item {
   margin-bottom: 5px;
 }
+
 .el-input__inner {
   border-color: #ccc !important;
   border-radius: 2px;
   background-color: #ffffff !important;
   color: #333;
 }
+
 .el-input__icon {
   color: #666;
 }
@@ -116,6 +127,7 @@ a {
   color: #17bb94;
   font-weight: bold;
 }
+
 .regBox {
   color: #17bb94;
   font-size: 28px;

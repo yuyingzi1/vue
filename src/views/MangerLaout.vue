@@ -64,11 +64,11 @@
           <!-- 右侧区域 -->
           <div class="header-right">
             <img src="@/assets/商家头像.jpeg" style="width: 40px; border-radius: 50%; margin-right: 10px" />
-            <span class="external-white-text">王小虎</span>
+            <span class="external-white-text">{{ user.userName }}</span>
             <el-dropdown>
               <i class="el-icon-setting" style="margin-right: 15px"></i>
               <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item>退出登录</el-dropdown-item>
+                <div @click="logout"><el-dropdown-item >退出登录</el-dropdown-item></div>
               </el-dropdown-menu>
             </el-dropdown>
           </div>
@@ -84,10 +84,14 @@
 </template>
 
 <script>
+import request from "@/utils/request";
 export default {
   data() {
     return {
-      isCollapse: false, // 默认展开
+      // 默认展开
+      isCollapse: false,
+      // 定义User对象，从缓存里取值
+      user: JSON.parse(localStorage.getItem("user") || {}),
     };
   },
   methods: {
@@ -100,6 +104,12 @@ export default {
     toggleCollapse() {
       this.isCollapse = !this.isCollapse; // 切换侧边栏的折叠状态
     },
+    // 退出登录方法
+    logout() {
+      // 清除缓存
+      localStorage.removeItem("user");
+      this.$router.push("/login");
+    }
   },
 };
 </script>
