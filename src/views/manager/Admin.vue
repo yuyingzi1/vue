@@ -3,7 +3,8 @@
     <div style="margin-bottom:40px;font-size:18px;font-weight:530;">维修员管理</div>
     <div style="margin-bottom: 20px; display: flex">
       <div style="flex: 10;text-align: left">
-        <el-input placeholder="请输入查询内容" size="small" v-model="input" style="width: 20%; margin-right: 20px"><i slot="suffix" class="el-input__icon el-icon-search"></i></el-input>
+        <el-input placeholder="请输入查询内容" size="small"  v-model="search.userName" style="width: 20%; margin-right: 20px"><i slot="suffix" class="el-input__icon el-icon-search"></i></el-input>
+        <el-button type="success" size="small" style="border-radius: 1px;width: 100px;text-align: center">查询</el-button>
       </div>
       <div style="flex:2;text-align: right">
         <el-button type="success" size="small" style="border-radius:1px;width:100px;text-align:center" @click="add">新增</el-button>
@@ -25,13 +26,11 @@
     <div class="block" style="text-align: right;margin-top: 50px">
       <el-pagination
           background
-          @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
-          :current-page="currentPage4"
-          :page-sizes="[100, 200, 300, 400]"
-          :page-size="100"
-          layout="prev, pager, next"
-          :total="1000">
+          :current-page="pageNum"
+          :page-size="5"
+          layout="total, prev, pager, next"
+          :total="total">
       </el-pagination>
     </div>
     <el-dialog title="请填写信息" :visible.sync="dialogVisible" width="40%">
@@ -70,16 +69,15 @@ export default {
     handleClick(row) {
       console.log(row);
     },
-    handleSizeChange(val) {
-      console.log(`每页 ${val} 条`);
-    },
-    handleCurrentChange(val) {
-      console.log(`当前页: ${val}`);
+    handleCurrentChange(pageNum) {
+      this.pageNum = pageNum;
+      this.load();
     },
     load() {
-      request.get('/admin/alldata').then(res => {
+      request.get('/admin/page?pageNum='  + this.pageNum, this.search).then(res => {
         if (res.code === '0') {
-          this.tableData = res.data;
+          this.tableData = res.data.list;
+          this.total = res.data.total;
         } else {
           this.$notify.error(res.msg)
         }
@@ -147,14 +145,13 @@ export default {
   },
   data() {
     return {
-      input: '',
-      currentPage1: 5,
-      currentPage2: 5,
-      currentPage3: 5,
-      currentPage4: 4,
-      tableData: [],
+      form: {},
       dialogVisible: false,
-      form: {}
+      input: '',
+      pageNum: 1,
+      total: 0,
+      search: {},
+      tableData: []
     }
   }
 }
