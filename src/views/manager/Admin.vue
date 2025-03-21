@@ -4,10 +4,10 @@
     <div style="margin-bottom: 20px; display: flex">
       <div style="flex: 10;text-align: left">
         <el-input placeholder="请输入查询内容" size="small"  v-model="search.userName" style="width: 20%; margin-right: 20px"><i slot="suffix" class="el-input__icon el-icon-search"></i></el-input>
-        <el-button type="success" size="small" style="border-radius: 1px;width: 100px;text-align: center">查询</el-button>
+        <el-button type="primary" size="small" style="border-radius: 1px;width: 100px;text-align: center" @click="load(pageNum)">查询</el-button>
       </div>
       <div style="flex:2;text-align: right">
-        <el-button type="success" size="small" style="border-radius:1px;width:100px;text-align:center" @click="add">新增</el-button>
+        <el-button type="primary" size="small" style="border-radius:1px;width:100px;text-align:center" @click="add">新增</el-button>
       </div>
     </div>
     <el-table :data="tableData" border style="width: 100%" :fit="true" stripe :cell-style="{ textAlign: 'center' }" :header-cell-style="{ textAlign: 'center' }">
@@ -73,15 +73,16 @@ export default {
       this.pageNum = pageNum;
       this.load();
     },
+    // 分页加载表格数据
     load() {
-      request.get('/admin/page?pageNum='  + this.pageNum, this.search).then(res => {
+      request.post("/admin/page?pageNum=" + this.pageNum, this.search).then(res => {
         if (res.code === '0') {
           this.tableData = res.data.list;
           this.total = res.data.total;
         } else {
-          this.$notify.error(res.msg)
+          this.$notify.error(res.msg);
         }
-      })
+      });
     },
     add() {
       this.form = {};
