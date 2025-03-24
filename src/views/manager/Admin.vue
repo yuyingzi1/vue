@@ -4,14 +4,19 @@
     <div style="margin-bottom: 20px; display: flex">
       <div style="flex: 10;text-align: left">
         <el-input placeholder="请输入查询内容" size="small"  v-model="search.userName" style="width: 20%; margin-right: 20px"><i slot="suffix" class="el-input__icon el-icon-search"></i></el-input>
-        <el-button type="success" size="small" style="border-radius: 1px;width: 100px;text-align: center">查询</el-button>
+        <el-button type="primary" size="small" style="border-radius: 1px;width: 100px;text-align: center" @click="load()">查询</el-button>
       </div>
       <div style="flex:2;text-align: right">
-        <el-button type="success" size="small" style="border-radius:1px;width:100px;text-align:center" @click="add">新增</el-button>
+        <el-button type="primary" size="small" style="border-radius:1px;width:100px;text-align:center" @click="add">新增</el-button>
       </div>
     </div>
     <el-table :data="tableData" border style="width: 100%" :fit="true" stripe :cell-style="{ textAlign: 'center' }" :header-cell-style="{ textAlign: 'center' }">
       <el-table-column prop="userName" label="姓名"></el-table-column>
+      <el-table-column label="头像">
+        <template v-slot="scope">
+          <el-image :src="scope.row.avatar" :preview-src-list="[scope.row.avatar]" style="width: 50px; height: 50px; border-radius: 50%"></el-image>
+        </template>
+      </el-table-column>
       <el-table-column prop="phone" label="手机号"></el-table-column>
       <el-table-column prop="age" label="年龄"></el-table-column>
       <el-table-column prop="gender" label="性别"></el-table-column>
@@ -35,6 +40,16 @@
     </div>
     <el-dialog title="请填写信息" :visible.sync="dialogVisible" width="40%">
       <el-form :model="form" label-position="right" label-width="100px" style="padding-right: 40px">
+        <el-form-item label="头像">
+          <el-upload
+              class="avatar-uploader"
+              action="http://localhost:9090/files/upload"
+              :show-file-list="false"
+              :on-success="handleAvatarSuccess">
+            <img v-if="form.avatar" :src="form.avatar" class="avatar">
+            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+          </el-upload>
+          </el-form-item>
         <el-form-item label="用户名">
           <el-input size="small" v-model="form.userName" placeholder="请输入用户名"></el-input>
         </el-form-item>
@@ -66,6 +81,9 @@ export default {
     this.load()
   },
   methods: {
+    handleAvatarSuccess(res) {
+      this.form.avatar = res.data;
+    },
     handleClick(row) {
       console.log(row);
     },
@@ -74,14 +92,14 @@ export default {
       this.load();
     },
     load() {
-      request.get('/admin/page?pageNum='  + this.pageNum, this.search).then(res => {
+      request.post("/admin/page?pageNum=" + this.pageNum, this.search).then(res => {
         if (res.code === '0') {
           this.tableData = res.data.list;
           this.total = res.data.total;
         } else {
-          this.$notify.error(res.msg)
+          this.$notify.error(res.msg);
         }
-      })
+      });
     },
     add() {
       this.form = {};
@@ -89,6 +107,7 @@ export default {
     },
     save(){
       if (!this.form.id){ //如果没有id 走新增接口
+        this.form.role = 1;
         request.post("/admin",this.form).then(res =>{ //post请求把form对象传到后端，后端写逻辑把form存到数据库里
           if (res.code === '0'){ //如果接口调用成功，则把模态框关闭，重新加载一下数据库的数据
             this.$notify.success("新增成功");
@@ -138,7 +157,7 @@ export default {
       });
     },
     //点击编辑，打开模态框，回显当前对象的信息
-     update(row) {
+    update(row) {
       this.form = JSON.parse(JSON.stringify(row));
       this.dialogVisible = true;
     }

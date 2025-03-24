@@ -63,7 +63,7 @@
           </div>
           <!-- 右侧区域 -->
           <div class="header-right">
-            <img src="@/assets/商家头像.jpeg" style="width: 40px; border-radius: 50%; margin-right: 10px" />
+            <img :src="user.avatar" style="width: 40px; border-radius: 50%; margin-right: 10px" />
             <span class="external-white-text">{{ user.userName }}</span>
             <el-dropdown>
               <i class="el-icon-setting" style="margin-right: 15px"></i>

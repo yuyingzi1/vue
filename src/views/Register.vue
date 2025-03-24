@@ -4,7 +4,7 @@
       <el-form>
         <el-form-item class="form-box" style="padding-top: 40px;border-radius: 10px">
           <el-form-item>
-            <el-input style="margin-bottom: 15px;" size="large" prefix-icon="el-icon-s-custom" placeholder="请输入用户名" v-model="form.userName"></el-input>
+            <el-input style="margin-bottom: 15px;" size="large" prefix-icon="el-icon-s-custom" placeholder="请输入用户名" v-model="form.phone"></el-input>
           </el-form-item>
           <el-form-item>
             <el-input style="margin-bottom: 15px" size="large" show-password prefix-icon="el-icon-key" placeholder="请输入密码" v-model="form.password"></el-input>
@@ -55,7 +55,7 @@ export default {
     // 注册
     register() {
       // 页面表单数据的输入校验
-      if (!this.form.userName) {
+      if (!this.form.phone) {
         this.$notify.error("请输入用户名");
         return;
       }
