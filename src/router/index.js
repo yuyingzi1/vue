@@ -12,7 +12,9 @@ const routes = [
         {path: 'home', component: () => import(/* webpackChunkName: "about" */ '@/views/manager/HomeView.vue')},
         {path: 'about', component: () => import(/* webpackChunkName: "about" */ '@/views/manager/AboutView.vue')},
         {path: 'admin', component: () => import(/* webpackChunkName: "about" */ '@/views/manager/Admin.vue')},
-          {path: 'user', component: () => import(/* webpackChunkName: "about" */ '@/views/manager/User.vue')},
+        {path: 'user', component: () => import(/* webpackChunkName: "about" */ '@/views/manager/User.vue')},
+        {path: 'productCategorization', component: () => import(/* webpackChunkName: "about" */ '@/views/manager/ProductCategorization.vue')},
+        {path: 'notice', component: () => import(/* webpackChunkName: "about" */ '@/views/manager/Notice.vue')},
       ]
   },
 

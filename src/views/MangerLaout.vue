@@ -19,7 +19,7 @@
               <i class="el-icon-user"></i>
               <span v-if="!isCollapse">系统首页</span>
             </template>
-            <el-menu-item index="/manager/home">系统首页</el-menu-item>
+            <el-menu-item index="/manager/notice">系统公告</el-menu-item>
           </el-submenu>
           <el-submenu index="2">
             <template slot="title">
@@ -43,7 +43,7 @@
               <span v-if="!isCollapse">资源列表</span>
             </template>
             <el-menu-item index="3-1">商品列表</el-menu-item>
-            <el-menu-item index="3-2">选项2</el-menu-item>
+            <el-menu-item index="/manager/productCategorization">商品分类</el-menu-item>
           </el-submenu>
         </el-menu>
       </el-aside>
